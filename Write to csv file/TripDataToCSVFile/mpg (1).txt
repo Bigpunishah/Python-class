@@ -1,0 +1,89 @@
+#!Vikel Cunningham
+import csv
+
+def get_miles_driven():
+    while True:
+        miles_driven = float(input("Enter miles driven :     "))                    
+        if miles_driven > 0:       
+            return miles_driven
+        else:
+            print("Entry must be greater than zero. Please try again.\n")
+            continue
+    
+def get_gallons_used():
+    while True:
+        gallons_used = float(input("Enter gallons of gas:     "))                    
+        if gallons_used > 0:       
+            return gallons_used
+        else:
+            print("Entry must be greater than zero. Please try again.\n")
+            continue
+def writeTrips():
+    trips = []
+    miles = get_miles_driven()
+    gals = get_gallons_used()
+    mpg = round((miles / gals), 2)
+    trips.append(int(miles))
+    trips.append(int(gals))
+    trips.append(mpg)
+    return trips
+
+def listTrips(data = []):
+    print()
+    print("Distance  Gallons  MPG")
+    for i in range(len(data)):
+        print(data[i][0], " \t " , data[i][1], "\t  ", data[i][2])
+
+
+
+def main():
+    # display a welcome message
+    print("The Miles Per Gallon application")
+    print()
+    trips_data = []
+    
+
+    more = "y"
+    while more.lower() == "y":
+        trips = []
+        trips = writeTrips()
+        trips_data.append(trips)
+        newline = " "
+        #! read trips may need to replace the write trips so I can add
+
+
+        filename = "trips.csv"
+        title = ["The Miles Per Gallon program"]
+        feilds = ["Distance", "Gallons", "MPG"]
+        enterMile = ["Enter miles driven: "]
+        enterGal = ["Enter gallons of gas"]
+        enterMPG = ["Miles Per Gallon: "]
+
+        with open(filename, 'w', newline='') as csvfile:
+            csvwriter = csv.writer(csvfile)
+            csvwriter.writerow(title)
+            csvwriter.writerow(feilds)
+            for i in range(len(trips_data)):
+                csvwriter.writerow(trips_data[i])
+                # print(trips_data[i])
+            csvwriter.writerow(newline)
+
+            listTrips(trips_data)
+        
+        read = csv.reader(csvfile)
+        for i in read:
+            print(i)
+            
+
+
+
+                                 
+        print()
+        
+        more = input("More entries? (y or n): ")
+    
+    print("Bye")
+
+if __name__ == "__main__":
+    main()
+
